@@ -1,20 +1,46 @@
 export class ToDoCard{
     private static counter: number = 0;
-    private cardId: number;
-    private creationDate: string;
-    private done: boolean;
-    private completionDate: string | null;
+    private _cardId: number;
+    private _creationDate: string;
+    private _done: boolean;
+    private _completionDate: string | null;
 
     constructor( 
-        private title: string,
-        private description : string,
-        private categoryId: number,
-        private deadline: string
+        private _title: string,
+        private _description : string,
+        private _categoryId: number,
+        private _deadline: string
     ){
-        this.cardId = ToDoCard.counter;
+        this._cardId = ToDoCard.counter;
         ToDoCard.counter++; 
-        this.creationDate = new Date().toISOString().split("T")[0];
-        this.done = false;
-        this.completionDate = null;
+        this._creationDate = new Date().toISOString().split("T")[0];
+        this._done = false;
+        this._completionDate = null;
+    }
+
+    get cardId(){
+        return this._cardId;
+    }
+
+    get title(){
+        return this._title;
+    }
+    get description(){
+        return this._description;
+    }
+    get categoryId(){
+        return this._categoryId;
+    }
+    get deadline(){
+        return this._deadline;
+    }
+    get creationDate(){
+        return this._creationDate;
+    }
+    get done(){
+        return this._done;
+    }
+    get completionDate(){
+        return this._completionDate;
     }
 }  
