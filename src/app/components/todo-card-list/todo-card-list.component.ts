@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ToDoCard } from '../../models/toDoCard';
-import { ToDoCardService } from '../../services/toDoCardService';
+import { TodoCard } from '../../models/todoCard';
+import { TodoCardService } from '../../services/todoCardService';
 import { TodoCardComponent } from '../todo-card/todo-card.component';
 
 @Component({
@@ -10,8 +10,8 @@ import { TodoCardComponent } from '../todo-card/todo-card.component';
   styleUrl: './todo-card-list.component.css'
 })
 export class TodoCardListComponent implements OnInit{
-  todoCards: ToDoCard[] = [];  
-  constructor(private _todoCardService: ToDoCardService){
+  todoCards: TodoCard[] = [];  
+  constructor(private _todoCardService: TodoCardService){
   }
   ngOnInit(): void {
     this.todoCards = this._todoCardService.getToDoCards();

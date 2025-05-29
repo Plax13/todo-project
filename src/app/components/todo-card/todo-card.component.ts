@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ToDoCard } from '../../models/toDoCard';
+import { TodoCard } from '../../models/todoCard';
 
 @Component({
   selector: 'app-todo-card',
@@ -8,7 +8,7 @@ import { ToDoCard } from '../../models/toDoCard';
   styleUrl: './todo-card.component.css'
 })
 export class TodoCardComponent {
-  @Input('todoCard') todoCard!: ToDoCard;
+  @Input('todoCard') todoCard!: TodoCard;
   @Output('deleteTodo') deleteTodo = new EventEmitter<number>(); 
   onDelete(){
     this.deleteTodo.emit(this.todoCard.cardId);
