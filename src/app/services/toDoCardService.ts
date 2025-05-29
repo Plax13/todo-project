@@ -14,4 +14,10 @@ export class ToDoCardService{
     getToDoCards(): ToDoCard[]{
         return this.toDoCards;
     }
+
+    delete(id: number): boolean{
+        const lenBefore = this.toDoCards.length;
+        this.toDoCards = this.toDoCards.filter(tc => tc.cardId != id);
+        return lenBefore != this.toDoCards.length;
+    }
 }

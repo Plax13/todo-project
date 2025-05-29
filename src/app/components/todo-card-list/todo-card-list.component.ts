@@ -16,4 +16,10 @@ export class TodoCardListComponent implements OnInit{
   ngOnInit(): void {
     this.todoCards = this._todoCardService.getToDoCards();
   }
+  handleDelete(id: number){
+    const wasDeleted = this._todoCardService.delete(id);
+    if(wasDeleted){
+      alert("Il todo con id:")
+    }
+  }
 }
