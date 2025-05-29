@@ -1,0 +1,24 @@
+<form #f="ngForm" (ngSubmit)="addTodo()">
+    <div>
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" [(ngModel)]="todoCard.title">
+    </div>
+    <div>
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" [(ngModel)]="todoCard.description" >
+    </div>
+    <div>
+        <label for="category">Category:</label>
+        <select name="category" id="category" [(ngModel)]="todoCard.categoryId">
+            <option value="1">None</option>
+            <option value="2">Work</option>
+            <option value="3">Fun</option>
+            <option value="4">Study</option>
+        </select>
+    </div>
+    <div>
+        <label for="deadline">Deadline:</label>
+        <input type="date" id="deadline" name="deadline" [(ngModel)]="todoCard.deadline">
+    </div>
+    <button type="submit">Add todo</button>
+</form>

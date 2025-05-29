@@ -10,7 +10,8 @@ import { TodoCardComponent } from '../todo-card/todo-card.component';
   styleUrl: './todo-card-list.component.css'
 })
 export class TodoCardListComponent implements OnInit{
-  todoCards: TodoCard[] = [];  
+  todoCards: TodoCard[] = [];
+
   constructor(private _todoCardService: TodoCardService){
   }
   ngOnInit(): void {
@@ -19,7 +20,8 @@ export class TodoCardListComponent implements OnInit{
   handleDelete(id: number){
     const wasDeleted = this._todoCardService.delete(id);
     if(wasDeleted){
-      alert("Il todo con id:")
+      alert(`Il todo con id:${id} è stato eliminato`);
+      this.todoCards = this.todoCards.filter(todo => todo.cardId != id);
     }
   }
 }
