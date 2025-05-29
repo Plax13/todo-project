@@ -1,34 +1,22 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { TodoCard } from "../models/todoCard";
+import { Observable } from "rxjs";
+import { HttpClient } from "@angular/common/http";
 
-@Injectable({providedIn: "root"})
+@Injectable({ providedIn: "root" })
 export class TodoCardService{
-    lastId: number = 1;
-    todoCards: TodoCard[] = [];
-    
-    getToDoCards(): TodoCard[]{
-        return this.todoCards;
+    private _http = inject(HttpClient);
+    private _url = 'http://localhost:8080/api/todos';
+
+    findAll(): Observable<TodoCard[]> {
+        return this._http.get<TodoCard[]>(this._url);
     }
 
-    delete(id: number): boolean{
-        const lenBefore = this.todoCards.length;
-        this.todoCards = this.todoCards.filter(tc => tc.cardId != id);
-        return lenBefore != this.todoCards.length;
+    delete(id: number): Observable<void> {
+        return this._http.delete<void>(`${this._url}/${id}`);
     }
 
-    add(partialTodo: Partial<TodoCard>) {
-        const { title, description, categoryId, deadline } = partialTodo;
-        const todo: TodoCard = {
-            cardId: this.lastId,
-            title: title!,
-            description: description!,
-            categoryId: categoryId!,
-            deadline: deadline!,
-            done: false,
-            completionDate: "",
-            creationDate: new Date().toISOString().split("T")[0]
-        };
-        this.todoCards.push(todo);
-        this.lastId++;
+    add(todoCard: Partial<TodoCard>): Observable<TodoCard>{
+        return this._http.post<TodoCard>(this._url, todoCard);
     }
 }

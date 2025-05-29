@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { TodoCard } from '../../models/todoCard';
-import { TodoCardService } from '../../services/todoCardService';
 import { Router } from '@angular/router';
+import { TodoCardService } from '../../services/todoCardService';
 
 @Component({
   selector: 'app-add-todo-form-template',
@@ -22,7 +22,12 @@ export class AddTodoFormTemplateComponent {
   }
 
   addTodo() {
-    this._service.add(this.todoCard);
-    this._router.navigate(["/todo-list"]);
+    this._service.add(this.todoCard).subscribe({
+      next: todoCard => {
+        alert(`Todo card saved with id ${todoCard.todoId}`);
+        this._router.navigate(['/todo-list']);
+      },
+      error: e => alert('Failed to save the new todo card')
+    });
   }
 }

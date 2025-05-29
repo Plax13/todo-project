@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TodoCard } from '../../models/todoCard';
-import { TodoCardService } from '../../services/todoCardService';
 import { TodoCardComponent } from '../todo-card/todo-card.component';
+import { TodoCardService } from '../../services/todoCardService';
 
 @Component({
   selector: 'app-todo-card-list',
@@ -9,19 +9,34 @@ import { TodoCardComponent } from '../todo-card/todo-card.component';
   templateUrl: './todo-card-list.component.html',
   styleUrl: './todo-card-list.component.css'
 })
-export class TodoCardListComponent implements OnInit{
+export class TodoCardListComponent implements OnInit {
   todoCards: TodoCard[] = [];
+  private _todoCardService = inject(TodoCardService);
 
-  constructor(private _todoCardService: TodoCardService){
-  }
   ngOnInit(): void {
-    this.todoCards = this._todoCardService.getToDoCards();
+    this.loadTodoCards();
   }
-  handleDelete(id: number){
-    const wasDeleted = this._todoCardService.delete(id);
-    if(wasDeleted){
-      alert(`Il todo con id:${id} è stato eliminato`);
-      this.todoCards = this.todoCards.filter(todo => todo.cardId != id);
-    }
+ 
+  handleDelete(id: number): void {
+    this._todoCardService.delete(id).subscribe({
+      next: () => {
+        alert(`Todo card with id ${id} was deleted`);
+        this.todoCards = this.todoCards.filter(todo => todo.todoId != id);
+      },
+      error: e => {
+        alert('Failed to delete student with id ' + id);
+        this.loadTodoCards();
+      }
+    });
+  }
+
+  loadTodoCards(): void {
+    this._todoCardService.findAll().subscribe({
+      next: todoCards => this.todoCards = todoCards,
+      error: e => {
+        alert(e);
+        console.log("Failed to load todo cards: " + e);
+      }
+    });
   }
 }
